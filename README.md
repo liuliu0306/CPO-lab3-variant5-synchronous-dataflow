@@ -59,6 +59,7 @@ of all nodes except the final node is empty.
 - 10.06.2022 - 0
 1. Initial.
 2. Implement `SDF.py` and `SDF_test.py`.
-3. GitHub active successfully.
-4. Update README.
+3. Track data flow, record, and visualize.
+4. GitHub active successfully.
+5. Update README.
 
