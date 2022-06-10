@@ -7,7 +7,7 @@ Created on Wed Jun  8 19:32:48 2022
 
 import types
 import numpy as np
-import graphviz
+#import graphviz
 from typing import Union
 import logging
 import os
