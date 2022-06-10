@@ -10,12 +10,12 @@ import numpy as np
 # import graphviz
 from typing import Union
 import logging
-import os
-import inspect
+# import os
+# import inspect
 
 # filename = inspect.getframeinfo(inspect.currentframe()).filename
-path = os.path.dirname(os.path.abspath(filename))
-os.chdir(path)
+# path = os.path.dirname(os.path.abspath(filename))
+# os.chdir(path)
 
 logging.basicConfig(
     filename='./log/SDF.log',
