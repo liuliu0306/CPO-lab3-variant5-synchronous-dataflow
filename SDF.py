@@ -4,7 +4,6 @@ Created on Wed Jun  8 19:32:48 2022
 
 @author: liurh
 """
-
 import types
 import numpy as np
 import graphviz
@@ -143,14 +142,14 @@ class SDF():
                     logging.info(f'Current token_vec:\n{self.token_vec}\n')
                     # print(self.token_vec)
 
-    @arg_type([1], [str])
-    def show(self, path):
-        with open(path) as f:
-            dot_graph = f.read()
-        dot = graphviz.Source(dot_graph)
-        dot.render(filename=f'{self.name}-epoch{path[-5:-4]}',\
-                   directory='./figure', view=False)
-        # dot.view()
+    # @arg_type([1], [str])
+    # def show(self, path):
+    #     with open(path) as f:
+    #         dot_graph = f.read()
+    #     dot = graphviz.Source(dot_graph)
+    #     dot.render(filename=f'{self.name}-epoch{path[-5:-4]}',\
+    #                 directory='./figure', view=False)
+    #     dot.view()
 
     @arg_type([1], [int])
     def visualize(self, epoch):
@@ -182,7 +181,7 @@ class SDF():
         f = open(path, 'w')
         f.write('\n'.join(res))
         f.close()
-        self.show(path)
+        # self.show(path)
         
 
 class Node(object):
@@ -215,3 +214,4 @@ if __name__ == '__main__':
     hello.add_token('C_add', 'end', [])
     
     hello.execute()
+
