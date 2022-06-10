@@ -4,6 +4,7 @@ Created on Wed Jun  8 19:32:48 2022
 
 @author: liurh
 """
+
 import types
 import numpy as np
 import graphviz
@@ -16,9 +17,11 @@ filename = inspect.getframeinfo(inspect.currentframe()).filename
 path = os.path.dirname(os.path.abspath(filename))
 os.chdir(path)
 
-logging.basicConfig(filename='./log/SDF.log',
-    format = '%(asctime)s-%(levelname)s-%(funcName)s:\n%(message)s\n',
+logging.basicConfig(
+    filename='./log/SDF.log',\
+    format = '%(asctime)s-%(levelname)s-%(funcName)s:\n%(message)s\n',\
     level=logging.INFO)
+
 
 def arg_type(arg_index: Union[int, list], arg_type):
     # Check function arguments and values.
@@ -41,13 +44,13 @@ class SDF():
     1. name -> Name of Synchronous Data Flow model.
     2. nodes -> Nodes of Synchronous Data Flow model, see class Node.
     3. if_fire_vec -> Activation vector, which is a vector that
-                    records the activation state of all nodes, 
+                    records the activation state of all nodes,
                     the activation indicates that it can be fired.
     4. token_vec -> This is a list of triples whose shape is:
                 [start node of edge, end point of edge, token].
                 This vector is updated every time when the token is updated.
 
-    The main function is the execute function, 
+    The main function is the execute function,
     which controls the update of the token and the flow of data.
     """
     @arg_type([1, 2, 3, 4], [str, list, list, list])
@@ -77,7 +80,7 @@ class SDF():
         if 'end' in current_node:
             return False
         numpy_vec = np.array(self.token_vec, dtype=object)
-        tmp = np.where(numpy_vec[:,1] == current_node)[0]
+        tmp = np.where(numpy_vec[:, 1] == current_node)[0]
         # tmp is the index array of a col which name is current_node.
         if len(tmp) > 0:
             for token in numpy_vec[tmp, 2]:
@@ -109,7 +112,7 @@ class SDF():
         # Scan the token_vec vector to 
         # update the activation state of each node.
         numpy_vec = np.array(self.token_vec, dtype=object)
-        tmp = np.where(numpy_vec[:,0] == node.name)[0]
+        tmp = np.where(numpy_vec[:, 0] == node.name)[0]
         for inx in tmp:
             self.token_vec[inx][2].append(token)
 
@@ -128,7 +131,7 @@ class SDF():
             epoch += 1
             logging.info(f'Epoch-{epoch}')
             for ni, fire in enumerate(self.if_fire_vec):
-                if fire == True:
+                if fire:
 
                     node = self.nodes[ni]
                     logging.info(f'Update Node:{node.name}')
@@ -182,7 +185,7 @@ class SDF():
         f.write('\n'.join(res))
         f.close()
         # self.show(path)
-        
+
 
 class Node(object):
     @arg_type([1, 2], [str, types.FunctionType])
@@ -199,19 +202,18 @@ class Node(object):
 if __name__ == '__main__':
 
     hello = SDF('hello')
-    
-    hello.add_node('root1', lambda x:None)
-    hello.add_node('root2', lambda x:None)
-    hello.add_node('end', lambda x:None)
-    hello.add_node('A_square', lambda x:x**2)
-    hello.add_node('B_square',lambda x:x**2)
-    hello.add_node('C_add',lambda x, y:x+y)
+
+    hello.add_node('root1', lambda x: None)
+    hello.add_node('root2', lambda x: None)
+    hello.add_node('end', lambda x: None)
+    hello.add_node('A_square', lambda x: x**2)
+    hello.add_node('B_square', lambda x: x**2)
+    hello.add_node('C_add', lambda x, y: x+y)
     
     hello.add_token('root1', 'A_square', [1,2,3])
     hello.add_token('root2', 'B_square', [4,5,6])
     hello.add_token('A_square', 'C_add', [])
     hello.add_token('B_square', 'C_add', [])
     hello.add_token('C_add', 'end', [])
-    
-    hello.execute()
 
+    hello.execute()
