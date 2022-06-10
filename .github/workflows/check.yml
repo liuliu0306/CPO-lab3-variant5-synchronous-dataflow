@@ -3,18 +3,6 @@ name: Python sanity check and tests
 on: [push]
 
 jobs:
-  test:
-    name: Test on node ${{ matrix.node-version }} and ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    steps:
-    - uses: actions/checkout@v1
-    - uses: kamiazya/setup-graphviz@v1
-    - name: Setup Graphviz
-      uses: ts-graphviz/setup-graphviz@v1
-
   python:
     name: Run tests and check python code
     runs-on: ubuntu-latest
@@ -50,6 +38,7 @@ jobs:
   markdown:
     name: Lint markdown
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v2
     - name: Lint markdown files
