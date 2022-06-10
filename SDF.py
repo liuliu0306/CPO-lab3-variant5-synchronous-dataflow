@@ -18,8 +18,8 @@ path = os.path.dirname(os.path.abspath(filename))
 os.chdir(path)
 
 logging.basicConfig(
-    filename='./log/SDF.log',\
-    format = '%(asctime)s-%(levelname)s-%(funcName)s:\n%(message)s\n',\
+    filename='./log/SDF.log',
+    format = '%(asctime)s-%(levelname)s-%(funcName)s:\n%(message)s\n',
     level=logging.INFO)
 
 
@@ -102,14 +102,14 @@ class SDF():
         # Get data from each node's token.
         buffer = []
         numpy_vec = np.array(self.token_vec, dtype=object)
-        tmp = np.where(numpy_vec[:,1] == node.name)[0]
+        tmp = np.where(numpy_vec[:, 1] == node.name)[0]
         for inx in tmp:
             buffer.append(self.token_vec[inx][2].pop(0))
         return buffer
 
     @arg_type([1, 2], [object, int])
     def _update_token_vec(self, node, token):
-        # Scan the token_vec vector to 
+        # Scan the token_vec vector to
         # update the activation state of each node.
         numpy_vec = np.array(self.token_vec, dtype=object)
         tmp = np.where(numpy_vec[:, 0] == node.name)[0]
@@ -119,8 +119,8 @@ class SDF():
     def execute(self):
         # Run the network, core function.
         """
-        Each round loops for each node: 
-        update activation status -> get tokens -> 
+        Each round loops for each node:
+        update activation status -> get tokens ->
         perform node operations -> update activation status
         """
         epoch = 0
@@ -209,9 +209,9 @@ if __name__ == '__main__':
     hello.add_node('A_square', lambda x: x**2)
     hello.add_node('B_square', lambda x: x**2)
     hello.add_node('C_add', lambda x, y: x+y)
-    
-    hello.add_token('root1', 'A_square', [1,2,3])
-    hello.add_token('root2', 'B_square', [4,5,6])
+
+    hello.add_token('root1', 'A_square', [1, 2, 3])
+    hello.add_token('root2', 'B_square', [4, 5, 6])
     hello.add_token('A_square', 'C_add', [])
     hello.add_token('B_square', 'C_add', [])
     hello.add_token('C_add', 'end', [])
