@@ -9,16 +9,20 @@ Chen Weite 212320039
 ## Laboratory work description
 
 - A graph can represent a dataflow. Each node represents an action.
+
 Each edge – data transfers.
 
 - A node can be activated when all input edges received tokens and consume only
+
 one value from each. After activation,
 the node should provide a single tag on each output.
 
 - Input nodes can be manually activated in the simulation process by a user.
+
 Run-time error should be processed correctly.
 
 - You should use the default Python logging module to make the interpreter work transparent.
+
 Should provide complex examples such as a quadratic formula and RS-trigger.
 
 - Visualization by a dataflow graph and as a dataflow graph with trace annotation.
@@ -26,11 +30,14 @@ Should provide complex examples such as a quadratic formula and RS-trigger.
 ## Features
 
 - Each round loops for each node:
-Update activation status -> get tokens ->perform node operations -> update activation status
+
+Update activation status -> get tokens ->
+perform node operations -> update activation status
 
 - Implementation strategy:
+
 Add a token array to each edge based on the traditional graph data structure,
-which is convenient for saving temporary data. 
+which is convenient for saving temporary data.
 Immediately after the calculation of each node is completed,
 the token array of each edge is executed in a loop until the token array
 of all nodes except the final node is empty.
