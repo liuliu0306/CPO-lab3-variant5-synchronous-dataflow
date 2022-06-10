@@ -96,15 +96,20 @@ class SDFTest(unittest.TestCase):
 
 
 class NodeTest(unittest.TestCase):
+
     def test_Node(self):
+        def operator(x):
+            return x**2
         name = 'test_node_1'
-        node = Node(name, lambda x: x**2)
+        node = Node(name, operator)
         self.assertEqual(node.name, name)
-        self.assertEqual(node.operator, lambda x: x**2)
+        self.assertEqual(node.operator, operator)
 
     def test_operator(self):
+        def operator(x):
+            return x**2
         name = 'test_node_2'
-        node = Node(name, lambda x: x**2)
+        node = Node(name, operator)
         _input = 5
         _output = node.operator(_input)
         self.assertEqual(25, _output)
