@@ -39,7 +39,7 @@ class SDFTest(unittest.TestCase):
         case2.add_node('root1', lambda x: None)
         case2.add_node('end', lambda x: None)
         case2.add_node('A_cube', lambda x: x**3)
-        
+
         case2.add_token('root1', 'A_cube', [2, 3, 4])
         case2.add_token('A_cube', 'end', [])
         case2.execute()
@@ -91,7 +91,7 @@ class SDFTest(unittest.TestCase):
         sdf.add_node('node2', lambda x: x)
         sdf.add_token('node1', 'node2', [1, 2, 3])
         sdf._update_token_vec(sdf.nodes[0], 4)
-        self.assertEqual(sdf.token_vec, \
+        self.assertEqual(sdf.token_vec,
                          [['node1', 'node2', [1, 2, 3, 4]]])
 
 
