@@ -11,6 +11,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
     - uses: actions/checkout@v1
+    - uses: kamiazya/setup-graphviz@v1
     - name: Setup Graphviz
       uses: ts-graphviz/setup-graphviz@v1
 
