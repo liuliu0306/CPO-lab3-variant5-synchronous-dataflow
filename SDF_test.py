@@ -19,11 +19,11 @@ class SDFTest(unittest.TestCase):
         case1.add_node('root2', lambda x: None)
         case1.add_node('end', lambda x: None)
         case1.add_node('A_square', lambda x: x**2)
-        case1.add_node('B_square',lambda x: x**2)
-        case1.add_node('C_add',lambda x, y: x+y)
+        case1.add_node('B_square', lambda x: x**2)
+        case1.add_node('C_add', lambda x, y: x+y)
 
-        case1.add_token('root1', 'A_square', [1,2,3])
-        case1.add_token('root2', 'B_square', [4,5,6])
+        case1.add_token('root1', 'A_square', [1, 2, 3])
+        case1.add_token('root2', 'B_square', [4, 5, 6])
         case1.add_token('A_square', 'C_add', [])
         case1.add_token('B_square', 'C_add', [])
         case1.add_token('C_add', 'end', [])
@@ -33,21 +33,21 @@ class SDFTest(unittest.TestCase):
         # Finall result is [1,2,3]**2 + [4,5,6]**2 = [17,29,45]
         for inx, edge in enumerate(case1.token_vec):
             if 'end' in edge[1]:
-                self.assertEqual(edge[2], [17,29,45])
+                self.assertEqual(edge[2], [17, 29, 45])
 
         case2 = SDF('case2')
         case2.add_node('root1', lambda x: None)
         case2.add_node('end', lambda x: None)
         case2.add_node('A_cube', lambda x: x**3)
         
-        case2.add_token('root1', 'A_cube', [2,3,4])
+        case2.add_token('root1', 'A_cube', [2, 3, 4])
         case2.add_token('A_cube', 'end', [])
         case2.execute()
-        
+
         # Finall result is [2,3,4]**3 = [8,27,64]
         for inx, edge in enumerate(case2.token_vec):
             if 'end' in edge[1]:
-                self.assertEqual(edge[2], [8,27,64])
+                self.assertEqual(edge[2], [8, 27, 64])
 
     def test_add_node(self):
         sdf = SDF('add_node')
@@ -97,16 +97,14 @@ class SDFTest(unittest.TestCase):
 
 class NodeTest(unittest.TestCase):
     def test_Node(self):
-        operator = lambda x: x**2
         name = 'test_node_1'
-        node = Node(name, operator)
+        node = Node(name, lambda x: x**2)
         self.assertEqual(node.name, name)
-        self.assertEqual(node.operator, operator)
+        self.assertEqual(node.operator, lambda x: x**2)
 
     def test_operator(self):
-        operator = lambda x: x**2
         name = 'test_node_2'
-        node = Node(name, operator)
+        node = Node(name, lambda x: x**2)
         _input = 5
         _output = node.operator(_input)
         self.assertEqual(25, _output)
