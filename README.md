@@ -3,8 +3,9 @@
 
 # Student number
 
-Liu Riheng 212320037
-Chen Weite 212320039
+- Liu Riheng 212320037
+
+- Chen Weite 212320039
 
 ## Laboratory work description
 
