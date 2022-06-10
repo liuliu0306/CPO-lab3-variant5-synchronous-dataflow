@@ -6,7 +6,7 @@ Created on Fri Jun 10 10:35:53 2022
 """
 
 import unittest
-from SDF import SDF, Node, arg_type
+from SDF import SDF, Node
 
 
 class SDFTest(unittest.TestCase):
