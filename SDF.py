@@ -13,7 +13,7 @@ import logging
 import os
 import inspect
 
-filename = inspect.getframeinfo(inspect.currentframe()).filename
+# filename = inspect.getframeinfo(inspect.currentframe()).filename
 path = os.path.dirname(os.path.abspath(filename))
 os.chdir(path)
 
