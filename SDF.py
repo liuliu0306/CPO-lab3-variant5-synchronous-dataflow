@@ -19,7 +19,7 @@ os.chdir(path)
 
 logging.basicConfig(
     filename='./log/SDF.log',
-    format = '%(asctime)s-%(levelname)s-%(funcName)s:\n%(message)s\n',
+    format='%(asctime)s-%(levelname)s-%(funcName)s:\n%(message)s\n',
     level=logging.INFO)
 
 
