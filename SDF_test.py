@@ -136,8 +136,8 @@ digraph G {'''+f'''
 
     # Additional cases
     @settings(max_examples=100)
-    @given(st.lists(st.integers()),
-            st.lists(st.integers()))
+    @given(st.lists(st.integers()), \
+           st.lists(st.integers()))
     def test_SDF_PBT(self, a, b):
         a_cp = a.copy()
         b_cp = b.copy()
@@ -167,11 +167,10 @@ digraph G {'''+f'''
 
         # test token
         self.assertEqual(
-            sdf.token_vec,
-            [['root1', 'add', res_a], 
+            sdf.token_vec, \
+            [['root1', 'add', res_a],
               ['root2', 'add', res_b],
-              ['add', 'end', res]]
-                          )
+              ['add', 'end', res]])
 
 
 class NodeTest(unittest.TestCase):
