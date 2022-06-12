@@ -6,6 +6,8 @@ Created on Fri Jun 10 10:35:53 2022
 """
 
 import unittest
+from hypothesis import given, settings
+import hypothesis.strategies as st
 from SDF import SDF, Node
 
 
@@ -93,6 +95,83 @@ class SDFTest(unittest.TestCase):
         sdf._update_token_vec(sdf.nodes[0], 4)
         self.assertEqual(sdf.token_vec,
                          [['node1', 'node2', [1, 2, 3, 4]]])
+
+    # PBT test: input graph
+    @settings(max_examples=100)
+    @given(st.lists(st.integers()),
+           st.lists(st.integers()))
+    def test_graph_PBT(self, a, b):
+        target = '''\n
+digraph G {'''+f'''
+ rankdir=LR;
+ root1[shape=rarrow];
+ root1 -> n_0;
+ root2[shape=rarrow];
+ root2 -> n_1;
+ end[shape=rarrow];
+ n_3 -> end;
+ n_0[label="root1"];
+ n_1[label="root2"];
+ n_2[label="add"];
+ n_3[label="end"];
+ n_0 -> n_2[label="{a}"];
+ n_1 -> n_2[label="{b}"];
+ n_2 -> n_3[label="[]"];
+'''+'''}'''
+
+        sdf = SDF('SDF')
+        sdf.add_node('root1', lambda x: x)
+        sdf.add_node('root2', lambda x: x)
+        sdf.add_node('add', lambda x, y: x + y)
+        sdf.add_node('end', lambda x: x)
+        sdf.add_token('root1', 'add', a)
+        sdf.add_token('root2', 'add', b)
+        sdf.add_token('add', 'end', [])
+
+        sdf.visualize(0)
+        path = f'./figure/{sdf.name}-0.dot'
+        with open(path) as f:
+            dot_graph = f.read()
+        self.assertEqual(dot_graph, target)
+
+    # Additional cases
+    @settings(max_examples=100)
+    @given(st.lists(st.integers()),
+            st.lists(st.integers()))
+    def test_SDF_PBT(self, a, b):
+        a_cp = a.copy()
+        b_cp = b.copy()
+        sdf = SDF('SDF')
+        sdf.add_node('root1', lambda x: x)
+        sdf.add_node('root2', lambda x: x)
+        sdf.add_node('add', lambda x, y: x + y)
+        sdf.add_node('end', lambda x: x)
+
+        sdf.add_token('root1', 'add', a)
+        sdf.add_token('root2', 'add', b)
+        sdf.add_token('add', 'end', [])
+        sdf.execute()
+
+        res = []
+        res_a = []
+        res_b = []
+        len_a, len_b = len(a_cp), len(b_cp)
+        min_len = min(len_a, len_b)
+
+        if (len_a > 0) & (len_b > 0):
+            for ri in range(min_len):
+                res.append(a_cp[ri] + b_cp[ri])
+            res_a, res_b = a_cp[min_len:], b_cp[min_len:]
+        else:
+            res_a, res_b = a_cp, b_cp
+
+        # test token
+        self.assertEqual(
+            sdf.token_vec,
+            [['root1', 'add', res_a], 
+              ['root2', 'add', res_b],
+              ['add', 'end', res]]
+                          )
 
 
 class NodeTest(unittest.TestCase):
